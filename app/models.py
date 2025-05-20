@@ -5,6 +5,11 @@ from django.utils.crypto import get_random_string
 
 class User(AbstractUser):
     is_organizer = models.BooleanField(default=False)
+    favorite_events = models.ManyToManyField(
+        'Event', 
+        related_name='favorited_by',
+        blank=True,
+    )  # Un usuario puede tener múltiples eventos favoritos. Un evento puede ser marcado como favorito por múltiples usuarios
 
     @classmethod
     def validate_new_user(cls, email, username, password, password_confirm):
