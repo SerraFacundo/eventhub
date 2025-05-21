@@ -53,8 +53,8 @@
                             </a>
                             <form method="post" action="{% url 'remove_favorite' event.id %}" class="d-inline">
                                 {% csrf_token %}
-                                <button type="submit" class="btn btn-sm btn-outline-warning">
-                                    <i class="bi bi-star-fill" aria-hidden="true"></i>
+                                <button type="submit" class="btn btn-sm btn-outline-danger">
+                                    <i class="bi bi-heart-fill" aria-hidden="true"></i>
                                 </button>
                             </form>
                         </div>

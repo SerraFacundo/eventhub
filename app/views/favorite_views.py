@@ -11,7 +11,13 @@ def add_favorite(request, event_id):
     event = get_object_or_404(Event, pk=event_id)
     request.user.favorite_events.add(event)
     messages.success(request, f'"{event.title}" ha sido añadido a tus favoritos')
-    return redirect('event_detail', id=event_id)
+    
+    # Redireccionar a la página anterior o a la lista de eventos si no hay referrer
+    referer = request.META.get('HTTP_REFERER')
+    if referer:
+        return redirect(referer)
+    else:
+        return redirect('events')
 
 
 @login_required
@@ -20,7 +26,13 @@ def remove_favorite(request, event_id):
     event = get_object_or_404(Event, pk=event_id)
     request.user.favorite_events.remove(event)
     messages.success(request, f'"{event.title}" ha sido eliminado de tus favoritos')
-    return redirect('event_detail', id=event_id)
+    
+    # Redireccionar a la página anterior o a la lista de eventos si no hay referrer
+    referer = request.META.get('HTTP_REFERER')
+    if referer:
+        return redirect(referer)
+    else:
+        return redirect('events')
 
 
 @login_required
