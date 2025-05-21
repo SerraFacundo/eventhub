@@ -69,4 +69,9 @@ urlpatterns = [
     path('event/<int:event_id>/comments/delete/<int:comment_id>/', views.delete_comment, name='delete_comment'),
     path('comments/delete/<int:comment_id>/', views.delete_comment, name='delete_comment_organizer'),
     path('event/<int:event_id>/comments/edit/<int:comment_id>/', views.edit_comment, name='edit_comment'),
+    
+    # Favorites
+    path('events/<int:event_id>/favorite/add/', views.favorite_views.add_favorite, name='add_favorite'),
+    path('events/<int:event_id>/favorite/remove/', views.favorite_views.remove_favorite, name='remove_favorite'),
+    path('favorites/', views.favorite_views.my_favorites, name='my_favorites'),
 ]

@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}Mis Eventos Favoritos{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Mis Eventos Favoritos</h1>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Título</th>
+                <th>Descripción</th>
+                <th>Fecha</th>
+                <th>Categorías</th>
+                <th>Lugar</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for event in events %}
+                <tr>
+                    <td>{{ event.title }}</td>
+                    <td>{{ event.description }}</td>
+                    <td>{{ event.scheduled_at|date:"d b Y, H:i" }}</td>
+                    <td>
+                        <div style="row">
+                        {% for category in event.categories.all %}
+                                <div class="align-self-center">
+                                    <span class="badge badge-secondary bg-primary">{{ category.name }}</span>
+                                </div>
+                                {% empty %}
+                                Sin categoría
+                        {% endfor %}
+                        </div>
+                    </td>
+                    <td>
+                        {% if event.venue %}
+                            {{ event.venue }}
+                        {% else %}
+                            Sin lugar de evento
+                        {% endif %}
+                    </td>
+                    <td>
+                        <div class="hstack gap-1">
+                            <a href="{% url 'event_detail' event.id %}"
+                               class="btn btn-sm btn-outline-primary"
+                               aria-label="Ver detalle"
+                               title="Ver detalle">
+                                <i class="bi bi-eye" aria-hidden="true"></i>
+                            </a>
+                            <form method="post" action="{% url 'remove_favorite' event.id %}" class="d-inline">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-sm btn-outline-warning">
+                                    <i class="bi bi-star-fill" aria-hidden="true"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="6" class="text-center">No tienes eventos favoritos</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

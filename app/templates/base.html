@@ -77,12 +77,18 @@
                             <li class="nav-item">
                                 {% navbar_link 'view_comments' 'Comentarios' %}
                             </li>
+                            <li class="navbar-nav me-auto mb-2 mb-lg-0">
+                                {% navbar_link 'my_favorites' 'Favoritos' %}
+                            </li>
                         {% else %}
                             <li class="navbar-nav me-auto mb-2 mb-lg-0">
                                 {% navbar_link 'my_refunds' 'Reembolsos' %}
                             </li>
                             <li class="navbar-nav me-auto mb-2 mb-lg-0">
                                 {% navbar_link 'my_tickets' 'Entradas' %}
+                            </li>
+                            <li class="navbar-nav me-auto mb-2 mb-lg-0">
+                                {% navbar_link 'my_favorites' 'Favoritos' %}
                             </li>
                         {% endif %}
                         </ul>

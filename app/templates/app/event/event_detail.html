@@ -18,9 +18,25 @@
                     >
                         <i class="bi bi-pencil me-1"></i>Editar
                     </a>
-
                 {% else %}
-                    <a href="{% url 'ticket_create' event.id %}" class="btn btn-primary">
+                    <!-- Botones para añadir/quitar de favoritos -->
+                    {% if event in request.user.favorite_events.all %}
+                        <form method="post" action="{% url 'remove_favorite' event.id %}" class="d-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-outline-warning">
+                                <i class="bi bi-star-fill me-1"></i>Quitar de favoritos
+                            </button>
+                        </form>
+                    {% else %}
+                        <form method="post" action="{% url 'add_favorite' event.id %}" class="d-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-outline-warning">
+                                <i class="bi bi-star me-1"></i>Añadir a favoritos
+                            </button>
+                        </form>
+                    {% endif %}
+                    
+                    <a href="{% url 'ticket_create' event.id %}" class="btn btn-primary ms-2">
                         <i class="bi bi-ticket-perforated me-2"></i>Comprar entradas
                     </a>
                 {% endif %}
