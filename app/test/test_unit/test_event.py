@@ -26,7 +26,7 @@ class EventModelTest(TestCase):
         self.assertEqual(event.title, "Evento de prueba")
         self.assertEqual(event.description, "Descripción del evento de prueba")
         self.assertEqual(event.organizer, self.organizer)
-        self.assertEqual(event.status, "active") # Por default debe ser activo
+         # Por default debe ser activo
         self.assertIsNotNone(event.created_at)
         self.assertIsNotNone(event.updated_at)
 
@@ -42,6 +42,16 @@ class EventModelTest(TestCase):
         )
         self.assertEqual(errors, {})
 
+    def test_event_status_default(self):
+        """Verificando que el estado por defecto de un evento es 'active'"""
+        event = Event.objects.create(
+            title="Evento activo",
+            description="Descripción del evento activo",
+            scheduled_at=timezone.now() + datetime.timedelta(days=1),
+            organizer=self.organizer,
+        )
+        self.assertEqual(event.status, "active")
+    
     def test_event_validate_with_empty_title(self):
         """Test que verifica la validación de eventos con título vacío"""
         scheduled_at = timezone.now() + datetime.timedelta(days=1)
