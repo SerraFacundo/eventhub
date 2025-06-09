@@ -4,14 +4,15 @@ FROM python:3.12-slim
 # Establecer el directorio de trabajo
 WORKDIR /app
 
-# Instalar dependencias del sistema
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends gcc libpq-dev build-essential && \
-    rm -rf /var/lib/apt/lists/*
-
-# Copiar requirements.txt e instalar dependencias de Python
+# --- Capa 1: copiamos sólo requirements para aprovechar caché ---
 COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
+
+# ---Capa 2: Instalar dependencias del sistema en un solo Run
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends gcc libpq-dev build-essential \
+    && pip install --no-cache-dir -r requirements.txt \
+    && apt-get purge -y --auto-remove gcc libpq-dev build-essential \
+    && rm -rf /var/lib/apt/lists/*
 
 # Copiar el resto del código de la aplicación
 COPY . .
