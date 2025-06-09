@@ -29,6 +29,7 @@ class TicketLimitIntegrationTest(TestCase):
         # Intentar comprar 2 tickets más -> debe fallar porque 3+2 > 4
         response2 = self.client.post(self.url, data={"quantity": 2, "type": "GENERAL"})
         self.assertEqual(response2.status_code, 200)  # Renderiza la página con errores
+       
 
         # Verificar que solo hay 3 tickets en la base
         total = Ticket.objects.filter(user=self.user, event=self.event).aggregate(total=Sum("quantity"))["total"]
