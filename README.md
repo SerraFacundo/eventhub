@@ -62,8 +62,8 @@ docker run --env-file .env -p 8000:8000 my-django-app
 ```
 recuerden mapear los puertos mediante `-p 8000:8000` si no la aplicacion no va a aparecer en el navegador.
 
->[!info] Variables de entorno
->Es muy importante agregar las variables de entorno al contenedor en la parte de `--env-file .env`, si no el contenedor se levantara pero la aplicacion no funcionara.
+> [!WARNING] Variables de entorno
+> Es muy importante agregar las variables de entorno al contenedor en la parte de `--env-file .env`, si no el contenedor se levantara pero la aplicacion no funcionara.
 >
->Dentro el `.env.example` hay un ejemplo de como deberia ser el `.env` del desarrollador (este puede usarse para levantarlo si quieren). 
->El `.env` no debe ser subido al repositorio. 
+> Dentro el `.env.example` hay un ejemplo de como deberia ser el `.env` del desarrollador (este puede usarse para levantarlo si quieren). 
+> El `.env` no debe ser subido al repositorio. 
