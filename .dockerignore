@@ -1,0 +1,36 @@
+# No tiene sentido copiar la cache
+__pycache__/ 
+*.pyc
+*.pyo
+*.pyd
+
+# Ignorar la bases de datos
+*.db
+*.sqlite3
+
+*.log
+
+# Ignorar lo entornos virtuales
+*.env
+*.venv
+venv/
+.env*
+.env.example
+
+requirements.dev.txt
+
+# Ignorar archivos de configuración de IDEs
+.git
+.gitignore
+.idea
+.vscode
+*.swp
+.DS_Store
+.editorconfig
+
+*.migrations/
+fixtures/
+test/
+
+README.md
+ruff.toml
