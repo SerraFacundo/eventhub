@@ -54,7 +54,7 @@ Se asocicia un comando, o una serie de comandos a un comando personalizado. Se p
 ## Docker
 La imagen de Docker se buildea mediante el comnando:
 ```bash
-docker build -t my-django-app
+docker build -t my-django-app .
 ```
 Para levantar el contenedor:
 ```bash
