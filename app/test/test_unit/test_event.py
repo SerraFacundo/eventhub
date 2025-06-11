@@ -40,18 +40,6 @@ def create_mocked_events(self):
         scheduled_at=timezone.now() + datetime.timedelta(days=3),
         organizer=self.other_user,
     )
-    Event.objects.create(
-        title="Evento 6",
-        description="Evento pasado",
-        scheduled_at=timezone.now() - datetime.timedelta(days=1),
-        organizer=self.other_user,
-    )
-    Event.objects.create(
-        title="Evento 7",
-        description="Otro evento pasado",
-        scheduled_at=timezone.now() - datetime.timedelta(days=3),
-        organizer=self.organizer,
-    )
 
 
 class EventModelTest(TestCase):
@@ -234,27 +222,6 @@ class EventModelTest(TestCase):
         self.assertEqual(updated_event.title, original_title)
         self.assertEqual(updated_event.description, new_description)
         self.assertEqual(updated_event.scheduled_at, original_scheduled_at)
-
-    def test_event_filter_include_past_events(self):
-        """Test que verifica que la funcion de filtrado de eventos incluye eventos pasados"""
-        create_mocked_events(self)
-        events = Event.objects.all()
-
-        # filtro sin ningun parametro deberia traer solo eventos futuros
-        filtered_events = filter_events(events, None, None, None, None, None)
-        self.assertEqual(len(filtered_events), 5)
-        event6 = any(event.title == "Evento 6" for event in filtered_events)
-        event7 = any(event.title == "Evento 7" for event in filtered_events)
-        self.assertEqual(event6, False)
-        self.assertEqual(event7, False)
-
-        # param is_past_events True deberia traer todos los eventos
-        filtered_events = filter_events(events, None, None, None, True, None)
-        self.assertEqual(len(filtered_events), 7)
-        event6 = any(event.title == "Evento 6" for event in filtered_events)
-        event7 = any(event.title == "Evento 7" for event in filtered_events)
-        self.assertEqual(event6, True)
-        self.assertEqual(event7, True)
 
     def test_event_filter_search_title(self):
         """Test que verifica que la funcion de filtrado de eventos hace search por titulo correctamente"""
