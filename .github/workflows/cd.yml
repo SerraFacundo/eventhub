@@ -1,0 +1,41 @@
+name: Continuous Delivery
+
+# Este workflow se activa cuando se publica una nueva versión en GitHub.
+on:
+  release:
+    types: [published]
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v3
+
+      - name: Configurar QEMU
+        uses: docker/setup-qemu-action@v2
+
+      - name: Configurar Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Login en Docker Hub 
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Obtener timestamp
+        id: timestamp
+        run: echo "timestamp=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_OUTPUT
+
+      - name: Buildear y Pushear
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          tags: |
+            facundo788/ing-soft:latest
+            facundo788/ing-soft:${{ github.sha }}
+            facundo788/ing-soft:${{ steps.timestamp.outputs.timestamp }}
+            facundo788/ing-soft:${{ github.event.release.tag_name }}
