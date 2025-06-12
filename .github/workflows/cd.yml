@@ -24,8 +24,7 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       - name: Obtener timestamp
-        id: timestamp
-        run: echo "timestamp=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_OUTPUT
+        run: echo "timestamp=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
 
       - name: Buildear y Pushear
         uses: docker/build-push-action@v5
@@ -33,4 +32,4 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/ing-soft:latest,${{ secrets.DOCKERHUB_USERNAME }}/ing-soft:${{ env.date }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/ing-soft:latest,${{ secrets.DOCKERHUB_USERNAME }}/ing-soft:${{ env.timestamp }}
