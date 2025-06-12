@@ -33,3 +33,6 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/ing-soft:latest,${{ secrets.DOCKERHUB_USERNAME }}/ing-soft:${{ env.timestamp }}
+      
+      - name: Deploy
+        run: curl ${{ secrets.RENDER_HOOK }}
