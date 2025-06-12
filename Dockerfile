@@ -21,4 +21,4 @@ COPY . .
 EXPOSE 8000
 
 # Comando por defecto para correr el servidor de desarrollo
-CMD ["sh", "-c", "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"]
+CMD ["sh", "-c", "python manage.py migrate --noinput && python manage.py collectstatic --noinput && gunicorn eventhub.wsgi:application --bind 0.0.0.0:8000 --workers 3"]

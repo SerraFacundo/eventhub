@@ -113,6 +113,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 STATIC_URL = "/static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # Bootstrap 5
 STATICFILES_DIRS = [BASE_DIR / "static"]
