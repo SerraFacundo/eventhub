@@ -8,6 +8,7 @@ on:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
+    enviroment: env
 
     steps:
       - name: Checkout código
