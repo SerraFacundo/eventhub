@@ -4,6 +4,9 @@ name: Continuous Delivery
 on:
   release:
     types: [published]
+  push:
+    branches:
+      - main
 
 jobs:
   build-and-push:
